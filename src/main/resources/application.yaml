@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: onlineexam
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/onlineexam
+    username: postgres
+    password: admin
+
+  sql:
+    init:
+      mode: never
