@@ -36,7 +36,7 @@ public class UserDAOImpl implements IUserDAO {
     }
 
  @Override
-    public boolean IsAuthenciatedUser(User user) {
+    public boolean IsAuthenticatedUser(User user) {
      String sql = """
             SELECT COUNT(*)
             FROM users

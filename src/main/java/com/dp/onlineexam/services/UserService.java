@@ -15,8 +15,8 @@ public class UserService {
         return this.userDAO.saveUser(user);
     }
 
-    public boolean IsAuthenciatedUser(User user)
+    public boolean IsAuthenticatedUser(User user)
     {
-        return this.userDAO.IsAuthenciatedUser(user);
+        return this.userDAO.IsAuthenticatedUser(user);
     }
 }
