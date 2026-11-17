@@ -6,6 +6,16 @@ public class User {
     private String phoneNumber;
     private String address;
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    private String role;
+
     public String getEmail() {
         return email;
     }

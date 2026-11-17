@@ -57,4 +57,25 @@ public class UserDAOImpl implements IUserDAO {
      return count != null && count > 0;
 
     }
+
+    @Override
+    public boolean IsUserRegistered(String email) {
+        String sql = """
+            SELECT COUNT(*)
+            FROM users
+            WHERE email = :email
+            """;
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("email", email);
+
+        Integer count = namedParameterJdbcTemplate.queryForObject(
+                sql,
+                params,
+                Integer.class
+        );
+
+        return count != null && count > 0;
+
+    }
 }
