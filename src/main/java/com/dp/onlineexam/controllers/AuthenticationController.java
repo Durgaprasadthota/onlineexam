@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AuthenciationController {
+public class AuthenticationController {
     private final UserService userService;
 
-    public AuthenciationController(UserService userService) {
+    public AuthenticationController(UserService userService) {
         this.userService = userService;
     }
 
