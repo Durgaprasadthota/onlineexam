@@ -11,6 +11,7 @@ public class OnlineExamAdminDataInitializer implements CommandLineRunner {
 
     private final IUserDAO userDao;
     private final PasswordEncoder passwordEncoder;
+    private final String adminEmail = "admin@onlineexam.com";
 
     public OnlineExamAdminDataInitializer(
             IUserDAO userDao,
@@ -20,22 +21,16 @@ public class OnlineExamAdminDataInitializer implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
-
-        String email = "admin@onlineexam.com";
-
-        if (userDao.IsUserRegistered(email)) {
-            throw new Exception("User already exist in the db");
+    public void run(String... args) {
+        if (!userDao.IsUserRegistered(adminEmail)) {
+            String encodedPassword = passwordEncoder.encode("Admin@123");
+            User admin = new User();
+            admin.setEmail(adminEmail);
+            admin.setPassword(encodedPassword);
+            admin.setPhoneNumber("+919876543210");
+            admin.setAddress("HYD");
+            admin.setRole("ADMIN");
+            userDao.saveUser(admin);
         }
-        String encodedPassword = passwordEncoder.encode("Admin@123");
-        User admin = new User();
-        admin.setEmail(email);
-        admin.setPassword(encodedPassword);
-        admin.setPhoneNumber("+919876543210");
-        admin.setAddress("HYD");
-        admin.setRole("ADMIN");
-
-        userDao.saveUser(admin);
-
     }
 }
