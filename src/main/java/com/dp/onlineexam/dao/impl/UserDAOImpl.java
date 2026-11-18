@@ -43,7 +43,7 @@ public class UserDAOImpl implements IUserDAO {
     }
 
  @Override
-    public boolean IsAuthenticatedUser(User user) {
+    public boolean isAuthenticatedUser(User user) {
      String sql = """
             SELECT password
             FROM users
@@ -77,7 +77,7 @@ public class UserDAOImpl implements IUserDAO {
     }
 
     @Override
-    public boolean IsUserRegistered(String email) {
+    public boolean isUserRegistered(String email) {
         String sql = """
             SELECT COUNT(*)
             FROM users

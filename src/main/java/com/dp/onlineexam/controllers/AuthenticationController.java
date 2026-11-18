@@ -18,7 +18,7 @@ public class AuthenticationController {
     @PostMapping("/userexists")
     public ResponseEntity<Boolean> isAuthenticatedUser(@RequestBody User user) {
         try {
-            boolean IsUserRegistered = userService.IsAuthenticatedUser(user);
+            boolean IsUserRegistered = userService.isAuthenticatedUser(user);
             if( IsUserRegistered )
             {  return ResponseEntity.ok(true); }
             else

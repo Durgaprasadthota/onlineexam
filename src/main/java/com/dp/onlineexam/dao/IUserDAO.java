@@ -4,6 +4,6 @@ import com.dp.onlineexam.models.User;
 
 public interface IUserDAO {
     String saveUser(User user);
-    boolean IsAuthenticatedUser(User user);
-    public boolean IsUserRegistered(String email);
+    boolean isAuthenticatedUser(User user);
+    public boolean isUserRegistered(String email);
 }

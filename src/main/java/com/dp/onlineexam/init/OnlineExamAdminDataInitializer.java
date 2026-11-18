@@ -22,7 +22,7 @@ public class OnlineExamAdminDataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (!userDao.IsUserRegistered(adminEmail)) {
+        if (!userDao.isUserRegistered(adminEmail)) {
             String encodedPassword = passwordEncoder.encode("Admin@123");
             User admin = new User();
             admin.setEmail(adminEmail);
