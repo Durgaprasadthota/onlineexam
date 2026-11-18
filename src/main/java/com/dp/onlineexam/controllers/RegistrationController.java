@@ -22,6 +22,7 @@ public class RegistrationController {
     @PostMapping("/registration")
     public ResponseEntity<Map<String, String>> registerUser(@RequestBody User user) {
         try {
+            user.setAdmin(false);
             userService.saveUser(user);
             Map<String, String> response = new HashMap<>();
             response.put("message", "User registered successfully!");

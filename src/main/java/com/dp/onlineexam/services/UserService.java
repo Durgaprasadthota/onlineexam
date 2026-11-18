@@ -2,6 +2,7 @@ package com.dp.onlineexam.services;
 
 import com.dp.onlineexam.dao.IUserDAO;
 import com.dp.onlineexam.models.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service

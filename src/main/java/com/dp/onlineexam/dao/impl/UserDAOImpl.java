@@ -8,25 +8,32 @@ import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class UserDAOImpl implements IUserDAO {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    final String sql = """
-                INSERT INTO users (email, password, phone_number, address)
-                 VALUES (:email, :password, :phoneNumber, :address)
+    private PasswordEncoder passwordEncoder;
+    final String registerUserSQL = """
+                INSERT INTO users (email, password, phone_number, admin, address)
+                 VALUES (:email, :password, :phoneNumber, :admin,:address)
                 """;
 
-    public UserDAOImpl(NamedParameterJdbcTemplate namedJdbcTemplate) {
+    public UserDAOImpl(NamedParameterJdbcTemplate namedJdbcTemplate,PasswordEncoder passwordEncoder) {
         this.namedParameterJdbcTemplate = namedJdbcTemplate;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public String saveUser(User user) {
         try {
+            String password = user.getPassword();
+            user.setPassword(passwordEncoder.encode(password));
             namedParameterJdbcTemplate.update(
-                    sql,
+                    registerUserSQL,
                     new BeanPropertySqlParameterSource(user)
             );
         } catch (DataAccessException e) {
@@ -38,23 +45,34 @@ public class UserDAOImpl implements IUserDAO {
  @Override
     public boolean IsAuthenticatedUser(User user) {
      String sql = """
-            SELECT COUNT(*)
+            SELECT password
             FROM users
-            WHERE email = :email
-            AND password = :password
+            WHERE email = :email;
             """;
 
      MapSqlParameterSource params = new MapSqlParameterSource();
      params.addValue("email", user.getEmail());
-     params.addValue("password", user.getPassword());
 
-     Integer count = namedParameterJdbcTemplate.queryForObject(
+   List<String> passwords = namedParameterJdbcTemplate.query(
              sql,
              params,
-             Integer.class
+             (rs, rowNum) -> rs.getString("password")
      );
 
-     return count != null && count > 0;
+     if (passwords.isEmpty()) {
+         return false;
+     }
+
+     String encodedPassword = passwords.get(0);
+     boolean row = passwordEncoder.matches(
+             user.getPassword(),
+             encodedPassword
+     );
+
+     return passwordEncoder.matches(
+             user.getPassword(),
+             encodedPassword
+     );
 
     }
 

@@ -29,7 +29,7 @@ public class OnlineExamAdminDataInitializer implements CommandLineRunner {
             admin.setPassword(encodedPassword);
             admin.setPhoneNumber("+919876543210");
             admin.setAddress("HYD");
-            admin.setRole("ADMIN");
+            admin.setAdmin(true);
             userDao.saveUser(admin);
         }
     }
